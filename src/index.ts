@@ -114,15 +114,6 @@ export default class Flash {
         this.fixPosition();
     }
 
-    fixPosition(): void {
-        let value = Flash.baseConfig.offset;
-        Flash.list.map((flashItem) => {
-            if (flashItem.config.xAlign == this.config.xAlign && flashItem.config.yAlign == this.config.yAlign) {
-                value += flashItem.item.clientHeight + Flash.baseConfig.gap;
-            }
-        });
-    }
-
     close(): void {
         this.item.style.opacity = "0";
         setTimeout(() => {
@@ -132,5 +123,14 @@ export default class Flash {
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
         Flash.list.map((flashItem) => flashItem.fixPosition());
+    }
+
+    private fixPosition(): void {
+        let value = Flash.baseConfig.offset;
+        Flash.list.map((flashItem) => {
+            if (flashItem.config.xAlign == this.config.xAlign && flashItem.config.yAlign == this.config.yAlign) {
+                value += flashItem.item.clientHeight + Flash.baseConfig.gap;
+            }
+        });
     }
 }
