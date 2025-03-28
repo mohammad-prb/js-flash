@@ -1,5 +1,4 @@
 .fl-item {
-    --offset: 20px;
     --animation-speed: 0.5s;
 
     display: flex;
@@ -8,9 +7,8 @@
     position: fixed;
     z-index: 5000;
     padding: 8px 16px;
-    cursor: pointer;
     overflow: hidden;
-    outline: 1px solid;
+    outline: 1px solid;  /* outline-color with js */
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     opacity: 1;
     transition: var(--animation-speed);
@@ -41,20 +39,12 @@
         transform: translateX(0%);
     }
 }
-
-/* Left flash */
-.fl-item[class$="left"] {
-    left: var(--offset);
-}
+/* Left flash animation */
 .fl-item[class$="left"][data-animation="1"] {
     animation: fl-from-left var(--animation-speed);
     animation-fill-mode: both;
 }
-
-/* Right flash */
-.fl-item[class$="right"] {
-    right: var(--offset);
-}
+/* Right flash animation */
 .fl-item[class$="right"][data-animation="1"] {
     animation: fl-from-right var(--animation-speed);
     animation-fill-mode: both;

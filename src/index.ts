@@ -1,33 +1,22 @@
-type FlashType = 'success' | 'error' | 'warning' | 'info';
+import type {BaseConfig, ItemConfig, FlashType} from './interface';
 
-interface Config {
-    icons: boolean;
-    animations: boolean;
-    direction: 'ltr' | 'rtl';
-    xAlign: 'right' | 'left';
-    yAlign: 'top' | 'bottom';
-    borderRadius: number;
-    fontFamily?: string;
-    types: Record<FlashType, FlashTypeConfig>;
-}
-
-interface FlashTypeConfig {
-    color: string;
-    backgroundColor: string;
-    borderColor: string;
-}
+/* Add CSS file */
+fetch('./css/main.css').then((result) => {
+    result.text().then((css) => {
+        /* Create stylesheet */
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        document.adoptedStyleSheets = [sheet];
+    });
+});
 
 export default class Flash {
     private static list: Flash[] = [];
 
-    static config: Config = {
-        icons: true,
-        animations: true,
-        direction: 'ltr',
-        xAlign: 'left',
-        yAlign: 'top',
-        borderRadius: 16,
-        types: {
+    static baseConfig: BaseConfig = {
+        offset: 20,
+        gap: 8,
+        styles: {
             success: {
                 color: '#4CAF50',
                 backgroundColor: '#E8F5E9',
@@ -51,31 +40,53 @@ export default class Flash {
         }
     };
 
-    item = document.createElement("div");
+    static defaultItemConfig: ItemConfig = {
+        icon: true,
+        animation: true,
+        closable: true,
+        closeTimeout: 5000,
+        direction: 'ltr',
+        xAlign: 'left',
+        yAlign: 'top',
+        borderRadius: 16,
+    };
 
-    constructor(text: string, type: FlashType, {closable = true, closeTimeout = 5000}) {
+    item = document.createElement("div");
+    config: ItemConfig;
+
+    constructor(text: string, type: FlashType, config: Partial<ItemConfig> = {}) {
         Flash.list.push(this);
+
+        /* Assign item config */
+        this.config = Object.assign({}, Flash.defaultItemConfig);
+        Object.assign(this.config, config);
 
         /* Add classes */
         this.item.classList.add(`fl-item`);
-        this.item.classList.add(`fl-item-${Flash.config.xAlign}`);
+        this.item.classList.add(`fl-item-${config.xAlign}`);
 
         /* Add styles */
-        this.item.style.direction = Flash.config.direction;
-        this.item.style.borderRadius = Flash.config.borderRadius + "px";
-        this.item.style.color = Flash.config.types[type].color;
-        this.item.style.backgroundColor = Flash.config.types[type].backgroundColor;
-        this.item.style.outlineColor = Flash.config.types[type].borderColor;
+        this.item.style.direction = this.config.direction;
+        this.item.style.borderRadius = this.config.borderRadius + "px";
+        this.item.style.color = Flash.baseConfig.styles[type].color;
+        this.item.style.backgroundColor = Flash.baseConfig.styles[type].backgroundColor;
+        this.item.style.outlineColor = Flash.baseConfig.styles[type].borderColor;
+
+        /* Apply offset */
+        if (this.config.xAlign == 'left')
+            this.item.style.left = Flash.baseConfig.offset + "px";
+        else if (this.config.xAlign == 'right')
+            this.item.style.right = Flash.baseConfig.offset + "px";
 
         /* Apply animations */
-        this.item.dataset.animation = Flash.config.animations ? "1" : "0";
+        this.item.dataset.animation = this.config.animation ? "1" : "0";
 
         /* Apply fontFamily */
-        if (Flash.config.fontFamily)
-            this.item.style.fontFamily = Flash.config.fontFamily;
+        if (this.config.fontFamily)
+            this.item.style.fontFamily = this.config.fontFamily;
 
         /* Add icon */
-        if (Flash.config.icons) {
+        if (this.config.icon) {
             const icon = document.createElement("img");
             icon.classList.add("fl-icon");
             icon.src = `icons/${type}.svg`;
@@ -85,20 +96,31 @@ export default class Flash {
 
         /* Add content */
         const content = document.createElement("div");
-        content.classList.add("fl-text");
         content.innerHTML = text;
         this.item.appendChild(content);
 
         /* Close listener */
-        if (closable)
+        if (this.config.closable) {
             this.item.addEventListener("click", this.close);
+            this.item.style.cursor = 'pointer';
+        }
 
         /* Apply close timeout */
-        if (closeTimeout > 0) {
-            setTimeout(this.close, closeTimeout);
+        if (this.config.closeTimeout > 0) {
+            setTimeout(this.close, this.config.closeTimeout);
         }
 
         document.body.appendChild(this.item);
+        this.fixPosition();
+    }
+
+    fixPosition(): void {
+        let value = Flash.baseConfig.offset;
+        Flash.list.map((flashItem) => {
+            if (flashItem.config.xAlign == this.config.xAlign && flashItem.config.yAlign == this.config.yAlign) {
+                value += flashItem.item.clientHeight + Flash.baseConfig.gap;
+            }
+        });
     }
 
     close(): void {
@@ -109,5 +131,6 @@ export default class Flash {
 
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
+        Flash.list.map((flashItem) => flashItem.fixPosition());
     }
 }
