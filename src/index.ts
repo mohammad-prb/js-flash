@@ -132,5 +132,10 @@ export default class Flash {
                 value += flashItem.item.clientHeight + Flash.baseConfig.gap;
             }
         });
+
+        if (this.config.yAlign == 'top')
+            this.item.style.top = value + "px";
+        else if (this.config.yAlign == 'bottom')
+            this.item.style.bottom = value + "px";
     }
 }

@@ -1,13 +1,13 @@
 {
     "name": "js-flash",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "JavaScript package for flash messages.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",
-        "prepublishOnly": "npm test",
+        "prepublishOnly": "",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "files": [
