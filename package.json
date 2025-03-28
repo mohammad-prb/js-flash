@@ -1,0 +1,26 @@
+{
+    "name": "js-flash",
+    "version": "1.0.0",
+    "description": "JavaScript package for flash messages.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mohammad-prb/js-flash.git"
+    },
+    "keywords": [
+        "flash",
+        "message",
+        "flash message",
+        "js flash",
+        "js flash message",
+        "JavaScript flash",
+        "JavaScript flash message"
+    ],
+    "author": "Mohammad Pourbehzad <pspipm27@gmail.com>",
+    "sideEffects": false,
+    "license": "MIT",
+    "homepage": "https://github.com/mohammad-prb/js-flash"
+}
