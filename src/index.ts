@@ -1,14 +1,21 @@
+import mainCss from './css/main.css';
+import errorIcon from './icons/error.svg';
+import infoIcon from './icons/info.svg';
+import successIcon from './icons/success.svg';
+import warningIcon from './icons/warning.svg';
 import type {BaseConfig, ItemConfig, FlashType} from './interface';
 
 /* Add CSS file */
-fetch('./css/main.css').then((result) => {
-    result.text().then((css) => {
-        /* Create stylesheet */
-        const sheet = new CSSStyleSheet();
-        sheet.replaceSync(css);
-        document.adoptedStyleSheets = [sheet];
-    });
-});
+const sheet = new CSSStyleSheet();
+sheet.replaceSync(mainCss);
+document.adoptedStyleSheets = [sheet];
+
+const icons = {
+    error: errorIcon,
+    info: infoIcon,
+    success: successIcon,
+    warning: warningIcon,
+}
 
 export default class Flash {
     private static list: Flash[] = [];
@@ -89,7 +96,7 @@ export default class Flash {
         if (this.config.icon) {
             const icon = document.createElement("img");
             icon.classList.add("fl-icon");
-            icon.src = `icons/${type}.svg`;
+            icon.src = icons[type];
             icon.alt = type;
             this.item.appendChild(icon);
         }

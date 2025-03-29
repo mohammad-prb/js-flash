@@ -1,11 +1,11 @@
 {
     "name": "js-flash",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "JavaScript package for flash messages.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && copyfiles -u 1 src/**/*.css src/**/*.svg dist/",
         "prepare": "npm run build",
         "prepublishOnly": "",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,6 +31,7 @@
     "license": "MIT",
     "homepage": "https://github.com/mohammad-prb/js-flash",
     "devDependencies": {
+        "copyfiles": "^2.4.1",
         "typescript": "^5.8.2"
     }
 }
