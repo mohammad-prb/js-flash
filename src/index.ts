@@ -5,10 +5,21 @@ import successIcon from './icons/success.svg';
 import warningIcon from './icons/warning.svg';
 import type {BaseConfig, ItemConfig, FlashType} from './interface';
 
-/* Add CSS file */
-const sheet = new CSSStyleSheet();
-sheet.replaceSync(mainCss);
-document.adoptedStyleSheets = [sheet];
+function injectStyles(css: string) {
+    if (typeof window !== 'undefined' && 'CSSStyleSheet' in window) {
+        // Browser environment with Constructable Stylesheets support
+        const sheet = new CSSStyleSheet()
+        sheet.replaceSync(css)
+        document.adoptedStyleSheets = [...(document.adoptedStyleSheets || []), sheet]
+    } else if (typeof document !== 'undefined') {
+        // Fallback for older browsers
+        const style = document.createElement('style')
+        style.textContent = css
+        document.head.appendChild(style)
+    }
+    // In non-browser environments, styles won't be applied
+}
+injectStyles(mainCss)
 
 const icons = {
     error: errorIcon,
