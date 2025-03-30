@@ -1,4 +1,5 @@
 import { defineConfig } from 'tsup'
+import { readFileSync } from 'fs'
 
 export default defineConfig({
     entry: ['src/index.ts'],
@@ -9,25 +10,24 @@ export default defineConfig({
     clean: true,
     esbuildPlugins: [
         {
-            name: 'css-loader',
+            name: 'css-as-string',
             setup(build) {
-                build.onLoad({ filter: /\.css$/ }, async (args) => {
+                build.onLoad({ filter: /\.css$/ }, (args) => {
+                    const contents = readFileSync(args.path, 'utf8')
                     return {
-                        contents: `export default ${JSON.stringify(
-                            await require('fs').promises.readFile(args.path, 'utf8')
-                        )};`,
+                        contents: `export default ${JSON.stringify(contents)};`,
                         loader: 'js'
                     }
                 })
             }
         },
         {
-            name: 'svg-loader',
+            name: 'svg-as-string',
             setup(build) {
-                build.onLoad({ filter: /\.svg$/ }, async (args) => {
-                    const content = await require('fs').promises.readFile(args.path, 'utf8')
+                build.onLoad({ filter: /\.svg$/ }, (args) => {
+                    const contents = readFileSync(args.path, 'utf8')
                     return {
-                        contents: `export default ${JSON.stringify(content)};`,
+                        contents: `export default ${JSON.stringify(contents)};`,
                         loader: 'js'
                     }
                 })
