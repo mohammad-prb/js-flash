@@ -146,3 +146,5 @@ export default class Flash {
             this.item.style.bottom = value + "px";
     }
 }
+
+export type {BaseConfig, ItemConfig, FlashType};
