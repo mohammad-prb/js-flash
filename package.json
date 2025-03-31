@@ -1,11 +1,19 @@
 {
     "name": "js-flash",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "JavaScript package for flash messages.",
     "main": "./dist/index.umd.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.umd.js"
+        }
+    },
     "scripts": {
         "build": "vite build",
         "prepublishOnly": "npm run build"
@@ -30,8 +38,10 @@
     "license": "MIT",
     "homepage": "https://github.com/mohammad-prb/js-flash",
     "devDependencies": {
+        "@types/node": "^22.13.14",
         "typescript": "^5.8.2",
         "vite": "^6.2.4",
-        "vite-plugin-css-injected-by-js": "^3.5.2"
+        "vite-plugin-css-injected-by-js": "^3.5.2",
+        "vite-plugin-dts": "^4.5.3"
     }
 }
