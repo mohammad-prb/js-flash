@@ -1,11 +1,14 @@
-import './styles.css';
+import errorIcon from './icons/error.svg';
+import infoIcon from './icons/info.svg';
+import successIcon from './icons/success.svg';
+import warningIcon from './icons/warning.svg';
 import type {BaseConfig, ItemConfig, FlashType} from './interface';
 
 const icons: Record<FlashType, string> = {
-    error: './icons/error.svg',
-    info: './icons/info.svg',
-    success: './icons/success.svg',
-    warning: './icons/warning.svg',
+    error: errorIcon,
+    info: infoIcon,
+    success: successIcon,
+    warning: warningIcon,
 }
 
 export default class Flash {
