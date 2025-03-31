@@ -1,31 +1,11 @@
-import mainCss from './css/main.css';
-import errorIcon from './icons/error.svg';
-import infoIcon from './icons/info.svg';
-import successIcon from './icons/success.svg';
-import warningIcon from './icons/warning.svg';
+import './styles.css';
 import type {BaseConfig, ItemConfig, FlashType} from './interface';
 
-function injectStyles(css: string) {
-    if (typeof window !== 'undefined' && 'CSSStyleSheet' in window) {
-        // Browser environment with Constructable Stylesheets support
-        const sheet = new CSSStyleSheet()
-        sheet.replaceSync(css)
-        document.adoptedStyleSheets = [...(document.adoptedStyleSheets || []), sheet]
-    } else if (typeof document !== 'undefined') {
-        // Fallback for older browsers
-        const style = document.createElement('style')
-        style.textContent = css
-        document.head.appendChild(style)
-    }
-    // In non-browser environments, styles won't be applied
-}
-injectStyles(mainCss)
-
-const icons = {
-    error: errorIcon,
-    info: infoIcon,
-    success: successIcon,
-    warning: warningIcon,
+const icons: Record<FlashType, string> = {
+    error: './icons/error.svg',
+    info: './icons/info.svg',
+    success: './icons/success.svg',
+    warning: './icons/warning.svg',
 }
 
 export default class Flash {
@@ -81,7 +61,7 @@ export default class Flash {
 
         /* Add classes */
         this.item.classList.add(`fl-item`);
-        this.item.classList.add(`fl-item-${config.xAlign}`);
+        this.item.classList.add(`fl-item-${this.config.xAlign}`);
 
         /* Add styles */
         this.item.style.direction = this.config.direction;
@@ -134,9 +114,7 @@ export default class Flash {
 
     close(): void {
         this.item.style.opacity = "0";
-        setTimeout(() => {
-            this.item.remove();
-        }, 500);
+        setTimeout(this.item.remove, 500);
 
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
