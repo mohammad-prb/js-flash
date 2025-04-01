@@ -82,9 +82,11 @@ export default class Flash {
 
         /* Add icon */
         if (this.config.icon) {
+            console.log('icon', Flash.baseConfig.styles[type].icon); //test
+
             const icon = document.createElement("div");
             icon.classList.add("fl-icon");
-            icon.appendChild(Flash.baseConfig.styles[type].icon);
+            // icon.appendChild(Flash.baseConfig.styles[type].icon);
             this.element.appendChild(icon);
         }
 
