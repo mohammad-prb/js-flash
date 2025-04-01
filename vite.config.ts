@@ -18,10 +18,11 @@ export default defineConfig({
             },
         },
         sourcemap: true,
+        cssCodeSplit: false, // Force CSS into JS
     },
     plugins: [
         cssInjectedByJsPlugin(), // Injects CSS automatically
-        dts() // Generates .d.ts files
+        dts(), // Generates .d.ts files
     ],
-    assetsInclude: ['**/*.svg']  // This tells Vite to treat SVGs as assets
+    assetsInclude: ['**/*.svg'],  // This tells Vite to treat SVGs as assets
 });

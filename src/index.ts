@@ -1,3 +1,4 @@
+import './css/main.css';
 import errorIcon from './icons/error.svg';
 import infoIcon from './icons/info.svg';
 import successIcon from './icons/success.svg';
@@ -116,6 +117,7 @@ export default class Flash {
     }
 
     close(): void {
+        console.log(this.item); //test
         this.item.style.opacity = "0";
         setTimeout(this.item.remove, 500);
 
