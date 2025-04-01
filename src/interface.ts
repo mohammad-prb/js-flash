@@ -9,16 +9,16 @@ export interface BaseConfig {
 export interface ItemConfig {
     icon: boolean;
     animation: boolean;
-    closable: boolean,
-    closeTimeout: number,
+    closeByClick: boolean;
+    closeTimeout: number;
     direction: 'ltr' | 'rtl';
-    xAlign: 'right' | 'left';
-    yAlign: 'top' | 'bottom';
+    position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     borderRadius: number;
     fontFamily?: string;
 }
 
 export interface ItemStyle {
+    icon: string;
     color: string;
     backgroundColor: string;
     borderColor: string;
