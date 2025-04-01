@@ -1,6 +1,6 @@
 // <reference types="vite/client" />
 
 declare module '*.svg' {
-    const content: HTMLElement;
+    const content: string;
     export default content;
 }

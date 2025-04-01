@@ -18,7 +18,7 @@ export interface ItemConfig {
 }
 
 export interface ItemStyle {
-    icon: HTMLElement;
+    icon: string;
     color: string;
     backgroundColor: string;
     borderColor: string;

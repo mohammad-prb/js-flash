@@ -82,11 +82,12 @@ export default class Flash {
 
         /* Add icon */
         if (this.config.icon) {
-            console.log('icon', Flash.baseConfig.styles[type].icon); //test
+            // Extract just the SVG part (after 'data:image/svg+xml,')
+            const svgContent = Flash.baseConfig.styles[type].icon.replace('data:image/svg+xml,', '');
 
             const icon = document.createElement("div");
             icon.classList.add("fl-icon");
-            // icon.appendChild(Flash.baseConfig.styles[type].icon);
+            icon.innerHTML = decodeURIComponent(svgContent);
             this.element.appendChild(icon);
         }
 
@@ -97,13 +98,13 @@ export default class Flash {
 
         /* Close listener */
         if (this.config.closeByClick) {
-            this.element.addEventListener("click", this.close);
+            this.element.addEventListener("click", () => this.close());
             this.element.style.cursor = 'pointer';
         }
 
         /* Apply close timeout */
         if (this.config.closeTimeout > 0) {
-            setTimeout(this.close, this.config.closeTimeout);
+            setTimeout(() => this.close(), this.config.closeTimeout);
         }
 
         this.fixPosition();
@@ -111,11 +112,8 @@ export default class Flash {
     }
 
     close = (): void => {
-        console.log("this", this); //test
-        console.log("this.element", this.element); //test
-
         this.element.style.opacity = "0";
-        setTimeout(this.element.remove, 500);
+        setTimeout(() => this.element.remove(), 500);
 
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
