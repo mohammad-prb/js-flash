@@ -119,7 +119,7 @@ export default class Flash {
 
     close = (): void => {
         this.element.style.opacity = "0";
-        setTimeout(() => this.element.remove(), 500);
+        setTimeout(() => this.element.remove(), 300);
 
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
@@ -128,11 +128,11 @@ export default class Flash {
 
     private fixPosition = (): void => {
         let value = Flash.baseConfig.offset;
-        Flash.list.forEach((flashItem) => {
-            if (flashItem == this) return;
+        for (const flashItem of Flash.list) {
+            if (flashItem == this) break;
             if (flashItem.config.position == this.config.position)
                 value += flashItem.element.clientHeight + Flash.baseConfig.gap;
-        });
+        }
 
         const yAlign = this.config.position.split('-')[0];
         if (yAlign == 'top')
