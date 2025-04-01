@@ -12,7 +12,7 @@ export interface ItemConfig {
     closeByClick: boolean;
     closeTimeout: number;
     direction: 'ltr' | 'rtl';
-    position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    position: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     borderRadius: number;
     fontFamily?: string;
 }

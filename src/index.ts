@@ -73,6 +73,12 @@ export default class Flash {
         this.element.style.backgroundColor = Flash.baseConfig.styles[type].backgroundColor;
         this.element.style.outlineColor = Flash.baseConfig.styles[type].borderColor;
 
+        /* Apply left and right styles on 'top' and 'bottom' position */
+        if (this.config.position == 'top' || this.config.position == 'bottom') {
+            this.element.style.left = Flash.baseConfig.offset + "px";
+            this.element.style.right = Flash.baseConfig.offset + "px";
+        }
+
         /* Apply animations */
         this.element.dataset.animation = this.config.animation ? "1" : "0";
 
@@ -123,7 +129,8 @@ export default class Flash {
     private fixPosition = (): void => {
         let value = Flash.baseConfig.offset;
         Flash.list.forEach((flashItem) => {
-            if (flashItem != this && flashItem.config.position == this.config.position)
+            if (flashItem == this) return;
+            if (flashItem.config.position == this.config.position)
                 value += flashItem.element.clientHeight + Flash.baseConfig.gap;
         });
 

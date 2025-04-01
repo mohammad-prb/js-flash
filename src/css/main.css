@@ -15,30 +15,41 @@
 }
 .fl-icon {
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 }
 
+@keyframes fl-from-top {
+    0% {transform: translateY(-100%);}
+    100% {transform: translateY(0%);}
+}
+@keyframes fl-from-bottom {
+    0% {transform: translateY(100%);}
+    100% {transform: translateY(0%);}
+}
 @keyframes fl-from-left {
-    0% {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0%);
-    }
+    0% {transform: translateX(-100%);}
+    100% {transform: translateX(0%);}
 }
 @keyframes fl-from-right {
-    0% {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0%);
-    }
+    0% {transform: translateX(100%);}
+    100% {transform: translateX(0%);}
 }
+
+/* Top and bottom flash animations */
+.fl-item[class$="top"], .fl-item[class$="bottom"] {
+    max-width: 500px;
+    margin: auto !important;
+}
+.fl-item[class$="top"][data-animation="1"] {
+    animation: fl-from-top var(--animation-speed);
+    animation-fill-mode: both;
+}
+.fl-item[class$="bottom"][data-animation="1"] {
+    animation: fl-from-bottom var(--animation-speed);
+    animation-fill-mode: both;
+}
+
 /* Left flash animation */
 .fl-item[class$="left"] {
     left: 0;
@@ -47,6 +58,7 @@
     animation: fl-from-left var(--animation-speed);
     animation-fill-mode: both;
 }
+
 /* Right flash animation */
 .fl-item[class$="right"] {
     right: 0;
