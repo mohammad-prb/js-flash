@@ -1,10 +1,12 @@
 {
     "name": "js-flash",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "JavaScript package for flash messages.",
+    "type": "module",
     "main": "./dist/index.umd.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "style": "./dist/style.css",
     "files": [
         "dist"
     ],

@@ -2,6 +2,8 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "ESNext",
+        "declaration": true,
+        "declarationDir": "dist/types",
         "outDir": "dist",
         "strict": true,
         "moduleResolution": "node",
@@ -9,8 +11,9 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
-        "types": ["vite/client"]
+        "types": ["vite/client"],
+        "lib": ["ES6", "DOM"]
     },
     "include": ["src"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "dist"]
 }

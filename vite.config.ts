@@ -7,18 +7,17 @@ export default defineConfig({
         lib: {
             entry: 'src/index.ts', // Your main entry file
             name: 'Flash', // Global variable name (if used in browser)
-            fileName: (format) => {
-                if (format === 'umd') return 'index.umd.js';
-                return 'index.js';
-            },
+            fileName: (format) => format === 'umd' ? 'index.umd.js' : 'index.js',
             formats: ['es', 'umd'], // ES Modules + UMD for wider compatibility
         },
         rollupOptions: {
             external: [], // Mark external dependencies (like React, if any)
             output: {
+                assetFileNames: 'assets/[name][extname]', // Preserve CSS file name
                 globals: {}, // Define global variables for UMD build
             },
         },
+        sourcemap: true,
     },
     plugins: [
         cssInjectedByJsPlugin(), // Injects CSS automatically
