@@ -82,11 +82,13 @@ export default class Flash {
 
         /* Add icon */
         if (this.config.icon) {
-            const icon = document.createElement("img");
-            icon.classList.add("fl-icon");
-            icon.src = Flash.baseConfig.styles[type].icon;
-            icon.alt = type;
-            this.element.appendChild(icon);
+            const parser = new DOMParser();
+            const svgDoc = parser.parseFromString(Flash.baseConfig.styles[type].icon, 'image/svg+xml');
+            const svgElement = svgDoc.querySelector('svg');
+            if (svgElement) {
+                svgElement.classList.add("fl-icon");
+                this.element.appendChild(svgElement);
+            }
         }
 
         /* Add content */
