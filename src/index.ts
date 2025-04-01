@@ -30,9 +30,9 @@ export default class Flash {
                 borderColor: '#FFCDD2',
             },
             warning: {
-                color: '#FFC107',
+                color: '#BD8F04',
                 backgroundColor: '#FFF8E1',
-                borderColor: '#FFECB3',
+                borderColor: '#FFDC74',
             },
             info: {
                 color: '#2196F3',
@@ -50,7 +50,7 @@ export default class Flash {
         direction: 'ltr',
         xAlign: 'left',
         yAlign: 'top',
-        borderRadius: 16,
+        borderRadius: 12,
     };
 
     item = document.createElement("div");
@@ -117,7 +117,9 @@ export default class Flash {
     }
 
     close(): void {
+        console.log(this); //test
         console.log(this.item); //test
+
         this.item.style.opacity = "0";
         setTimeout(this.item.remove, 500);
 
@@ -129,7 +131,11 @@ export default class Flash {
     private fixPosition(): void {
         let value = Flash.baseConfig.offset;
         Flash.list.map((flashItem) => {
-            if (flashItem.config.xAlign == this.config.xAlign && flashItem.config.yAlign == this.config.yAlign) {
+            if (
+                flashItem != this &&
+                flashItem.config.xAlign == this.config.xAlign &&
+                flashItem.config.yAlign == this.config.yAlign
+            ) {
                 value += flashItem.item.clientHeight + Flash.baseConfig.gap;
             }
         });

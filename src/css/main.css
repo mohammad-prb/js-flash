@@ -3,10 +3,10 @@
 
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     position: fixed;
     z-index: 5000;
-    padding: 8px 16px;
+    padding: 8px 12px;
     overflow: hidden;
     outline: 1px solid;  /* outline-color with js */
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
