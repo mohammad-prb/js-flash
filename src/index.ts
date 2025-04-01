@@ -82,13 +82,10 @@ export default class Flash {
 
         /* Add icon */
         if (this.config.icon) {
-            const parser = new DOMParser();
-            const svgDoc = parser.parseFromString(Flash.baseConfig.styles[type].icon, 'image/svg+xml');
-            const svgElement = svgDoc.querySelector('svg');
-            if (svgElement) {
-                svgElement.classList.add("fl-icon");
-                this.element.appendChild(svgElement);
-            }
+            const icon = document.createElement("div");
+            icon.classList.add("fl-icon");
+            icon.appendChild(Flash.baseConfig.styles[type].icon);
+            this.element.appendChild(icon);
         }
 
         /* Add content */
@@ -112,6 +109,9 @@ export default class Flash {
     }
 
     close = (): void => {
+        console.log("this", this); //test
+        console.log("this.element", this.element); //test
+
         this.element.style.opacity = "0";
         setTimeout(this.element.remove, 500);
 

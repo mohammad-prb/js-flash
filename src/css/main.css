@@ -40,11 +40,17 @@
     }
 }
 /* Left flash animation */
+.fl-item[class$="left"] {
+    left: 0;
+}
 .fl-item[class$="left"][data-animation="1"] {
     animation: fl-from-left var(--animation-speed);
     animation-fill-mode: both;
 }
 /* Right flash animation */
+.fl-item[class$="right"] {
+    right: 0;
+}
 .fl-item[class$="right"][data-animation="1"] {
     animation: fl-from-right var(--animation-speed);
     animation-fill-mode: both;
