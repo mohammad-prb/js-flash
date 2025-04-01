@@ -3,7 +3,7 @@ export type FlashType = 'success' | 'error' | 'warning' | 'info';
 export interface BaseConfig {
     offset: number;
     gap: number;
-    styles: Record<FlashType, ItemStyle>;
+    types: Record<FlashType, ItemStyle>;
 }
 
 export interface ItemConfig {

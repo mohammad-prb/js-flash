@@ -8,10 +8,10 @@ import type {BaseConfig, ItemConfig, FlashType} from './interface';
 export default class Flash {
     private static list: Flash[] = [];
 
-    static baseConfig: BaseConfig = {
+    private static baseConfig: BaseConfig = {
         offset: 20,
         gap: 10,
-        styles: {
+        types: {
             success: {
                 icon: successIcon,
                 color: '#4CAF50',
@@ -39,7 +39,7 @@ export default class Flash {
         }
     };
 
-    static defaultItemConfig: ItemConfig = {
+    private static defaultItemConfig: ItemConfig = {
         icon: true,
         animation: true,
         closeByClick: true,
@@ -49,63 +49,69 @@ export default class Flash {
         borderRadius: 12,
     };
 
-    element = document.createElement("div");
-    type: FlashType;
-    config: ItemConfig;
+    private el: HTMLDivElement = document.createElement("div");
+    private readonly message: string;
+    private readonly type: FlashType;
+    private readonly config: ItemConfig;
 
-    constructor(text: string, type: FlashType, config: Partial<ItemConfig> = {}) {
+    private isClosed: boolean = false;
+    private closeResolve!: (value: void | PromiseLike<void>) => void;
+    private readonly closePromise: Promise<void>;
+
+    constructor(message: string, type: FlashType, config: Partial<ItemConfig> = {}) {
         Flash.list.push(this);
+        this.message = message;
         this.type = type;
+        this.closePromise = new Promise(resolve => this.closeResolve = resolve);
 
         /* Assign item config */
         this.config = Object.assign({}, Flash.defaultItemConfig);
         Object.assign(this.config, config);
 
         /* Add classes */
-        this.element.classList.add(`fl-item`);
-        this.element.classList.add(`fl-item-${this.config.position}`);
+        this.el.classList.add(`fl-item`);
+        this.el.classList.add(`fl-item-${this.config.position}`);
 
         /* Add styles */
-        this.element.style.direction = this.config.direction;
-        this.element.style.borderRadius = this.config.borderRadius + "px";
-        this.element.style.margin = `0 ${Flash.baseConfig.offset}px`;
-        this.element.style.color = Flash.baseConfig.styles[type].color;
-        this.element.style.backgroundColor = Flash.baseConfig.styles[type].backgroundColor;
-        this.element.style.outlineColor = Flash.baseConfig.styles[type].borderColor;
+        this.el.style.direction = this.config.direction;
+        this.el.style.borderRadius = this.config.borderRadius + "px";
+        this.el.style.margin = `0 ${Flash.baseConfig.offset}px`;
+        this.el.style.color = Flash.baseConfig.types[type].color;
+        this.el.style.backgroundColor = Flash.baseConfig.types[type].backgroundColor;
+        this.el.style.outlineColor = Flash.baseConfig.types[type].borderColor;
 
         /* Apply left and right styles on 'top' and 'bottom' position */
         if (this.config.position == 'top' || this.config.position == 'bottom') {
-            this.element.style.left = Flash.baseConfig.offset + "px";
-            this.element.style.right = Flash.baseConfig.offset + "px";
+            this.el.style.left = Flash.baseConfig.offset + "px";
+            this.el.style.right = Flash.baseConfig.offset + "px";
         }
 
         /* Apply animations */
-        this.element.dataset.animation = this.config.animation ? "1" : "0";
+        this.el.dataset.animation = this.config.animation ? "1" : "0";
 
         /* Apply fontFamily */
         if (this.config.fontFamily)
-            this.element.style.fontFamily = this.config.fontFamily;
+            this.el.style.fontFamily = this.config.fontFamily;
 
         /* Add icon */
         if (this.config.icon) {
             // Extract just the SVG part (after 'data:image/svg+xml,')
-            const svgContent = Flash.baseConfig.styles[type].icon.replace('data:image/svg+xml,', '');
-
+            const svgContent = Flash.baseConfig.types[type].icon.replace('data:image/svg+xml,', '');
             const icon = document.createElement("div");
             icon.classList.add("fl-icon");
             icon.innerHTML = decodeURIComponent(svgContent);
-            this.element.appendChild(icon);
+            this.el.appendChild(icon);
         }
 
         /* Add content */
         const content = document.createElement("div");
-        content.innerHTML = text;
-        this.element.appendChild(content);
+        content.innerHTML = this.message;
+        this.el.appendChild(content);
 
         /* Close listener */
         if (this.config.closeByClick) {
-            this.element.addEventListener("click", () => this.close());
-            this.element.style.cursor = 'pointer';
+            this.el.addEventListener("click", () => this.close());
+            this.el.style.cursor = 'pointer';
         }
 
         /* Apply close timeout */
@@ -114,12 +120,47 @@ export default class Flash {
         }
 
         this.fixPosition();
-        document.body.appendChild(this.element);
+        document.body.appendChild(this.el);
     }
 
-    close = (): void => {
-        this.element.style.opacity = "0";
-        setTimeout(() => this.element.remove(), 300);
+    static setBaseConfig = (config: Partial<BaseConfig>): void => {
+        Object.assign(Flash.baseConfig, config);
+    }
+
+    static setItemConfig = (config: Partial<ItemConfig>): void => {
+        Object.assign(Flash.defaultItemConfig, config);
+    }
+
+    public get element(): HTMLDivElement {
+        return this.el;
+    }
+
+    public get messageText(): string {
+        return this.message;
+    }
+
+    public get messageType(): FlashType {
+        return this.type;
+    }
+
+    public get itemConfig(): ItemConfig {
+        return this.config;
+    }
+
+    public get closed(): boolean {
+        return this.isClosed;
+    }
+
+    public get whenClosed(): Promise<void> {
+        return this.closePromise;
+    }
+
+    public close = (): void => {
+        this.isClosed = true;
+        this.closeResolve();
+
+        this.el.style.opacity = "0";
+        setTimeout(() => this.el.remove(), 300);
 
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
@@ -131,14 +172,14 @@ export default class Flash {
         for (const flashItem of Flash.list) {
             if (flashItem == this) break;
             if (flashItem.config.position == this.config.position)
-                value += flashItem.element.clientHeight + Flash.baseConfig.gap;
+                value += flashItem.el.clientHeight + Flash.baseConfig.gap;
         }
 
         const yAlign = this.config.position.split('-')[0];
         if (yAlign == 'top')
-            this.element.style.top = value + "px";
+            this.el.style.top = value + "px";
         else if (yAlign == 'bottom')
-            this.element.style.bottom = value + "px";
+            this.el.style.bottom = value + "px";
     }
 }
 
