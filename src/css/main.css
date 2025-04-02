@@ -42,12 +42,6 @@
     animation: fl-slide var(--animation-speed);
     animation-fill-mode: both;
 }
-.fl-item[data-pausable="1"] .fl-loading {
-    animation-play-state: running;
-}
-.fl-item[data-pausable="1"]:hover .fl-loading {
-    animation-play-state: paused;
-}
 
 /* Top and bottom flash animations */
 .fl-item[class$="top"], .fl-item[class$="bottom"] {

@@ -56,6 +56,7 @@ export default class Flash {
     };
 
     private el: HTMLDivElement = document.createElement("div");
+    private loading: HTMLDivElement = document.createElement("div");
     private readonly message: string;
     private readonly type: FlashType;
     private readonly config: ItemConfig;
@@ -141,18 +142,17 @@ export default class Flash {
 
             /* Add loading */
             if (this.config.loading) {
-                const loading = document.createElement('div');
-                loading.classList.add('fl-loading');
-                loading.style.backgroundColor = Flash.baseConfig.types[type].loadingColor;
-                loading.style.animation = `fl-loading ${this.config.closeTimeout / 1000}s linear`;
-                loading.style.animationFillMode = 'both';
+                this.loading.classList.add('fl-loading');
+                this.loading.style.backgroundColor = Flash.baseConfig.types[type].loadingColor;
+                this.loading.style.animation = `fl-loading ${this.config.closeTimeout / 1000}s linear`;
+                this.loading.style.animationFillMode = 'both';
 
                 if (this.config.direction == 'rtl')
-                    loading.style.right = '0';
+                    this.loading.style.right = '0';
                 else
-                    loading.style.left = '0';
+                    this.loading.style.left = '0';
 
-                this.el.appendChild(loading);
+                this.el.appendChild(this.loading);
             }
         }
 
@@ -207,13 +207,15 @@ export default class Flash {
     public pauseTimout = (): void => {
         clearTimeout(this.timeout.id);
         this.timeout.remaining -= Date.now() - this.timeout.startTime;
-        console.log('Pause', this.timeout.remaining); //test
+
+        this.loading.style.animationPlayState = 'paused';
     }
 
     public playTimout = (): void => {
         this.timeout.startTime = Date.now();
         this.timeout.id = setTimeout(() => this.close(), this.timeout.remaining);
-        console.log('Play'); //test
+
+        this.loading.style.animationPlayState = 'running';
     }
 
     private fixPosition = (): void => {
