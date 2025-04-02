@@ -29,6 +29,17 @@
     width: 24px;
     height: 24px;
 }
+.fl-content {
+    flex-grow: 1;
+}
+.fl-btn {
+    flex-shrink: 0;
+    padding: 2px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: 1px solid;  /* outline-color with js */
+    font-size: 0.875em;
+}
 .fl-loading {
     position: absolute;
     top: 0;  /* left and right with js */

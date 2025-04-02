@@ -1,5 +1,3 @@
-import {b} from "vite/dist/node/moduleRunnerTransport.d-CXw_Ws6P";
-
 export type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -23,6 +21,10 @@ export interface ItemConfig {
     position: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     borderRadius: number;
     fontFamily?: string;
+    action?: {
+        text: string;
+        handler: () => void;
+    };
 }
 
 export interface ItemStyle {
@@ -31,4 +33,9 @@ export interface ItemStyle {
     backgroundColor: string;
     borderColor: string;
     loadingColor: string;
+    button: {
+        color: string;
+        backgroundColor: string;
+        borderColor: string;
+    };
 }

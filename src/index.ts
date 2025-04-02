@@ -18,6 +18,11 @@ export default class Flash {
                 backgroundColor: '#E8F5E9',
                 borderColor: '#C8E6C9',
                 loadingColor: '#C8E6C9',
+                button: {
+                    color: '#000',
+                    backgroundColor: 'transparent',
+                    borderColor: '#C8E6C9',
+                }
             },
             error: {
                 icon: errorIcon,
@@ -25,6 +30,11 @@ export default class Flash {
                 backgroundColor: '#FFEBEE',
                 borderColor: '#FFCDD2',
                 loadingColor: '#FFCDD2',
+                button: {
+                    color: '#000',
+                    backgroundColor: 'transparent',
+                    borderColor: '#FFCDD2',
+                }
             },
             warning: {
                 icon: warningIcon,
@@ -32,6 +42,11 @@ export default class Flash {
                 backgroundColor: '#FFF8E1',
                 borderColor: '#FFDC74',
                 loadingColor: '#FFDC74',
+                button: {
+                    color: '#000',
+                    backgroundColor: 'transparent',
+                    borderColor: '#FFDC74',
+                }
             },
             info: {
                 icon: infoIcon,
@@ -39,6 +54,11 @@ export default class Flash {
                 backgroundColor: '#E3F2FD',
                 borderColor: '#BBDEFB',
                 loadingColor: '#BBDEFB',
+                button: {
+                    color: '#000',
+                    backgroundColor: 'transparent',
+                    borderColor: '#BBDEFB',
+                }
             }
         }
     };
@@ -118,8 +138,22 @@ export default class Flash {
 
         /* Add content */
         const content = document.createElement("div");
+        content.classList.add('fl-content');
         content.innerHTML = this.message;
         this.el.appendChild(content);
+
+        /* Add action */
+        if (this.config.action) {
+            const buttonStyles = Flash.baseConfig.types[type].button;
+            const btn = document.createElement("button");
+            btn.classList.add('fl-btn');
+            btn.style.color = buttonStyles.color;
+            btn.style.backgroundColor = buttonStyles.backgroundColor;
+            btn.style.outlineColor = buttonStyles.borderColor;
+            btn.addEventListener('click', this.config.action.handler);
+            btn.innerHTML = this.config.action.text;
+            this.el.appendChild(btn);
+        }
 
         /* Close listener */
         if (this.config.closeByClick) {

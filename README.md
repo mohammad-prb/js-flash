@@ -1,6 +1,8 @@
 # JavaScript Flash Message (js-flash)
 
-JavaScript package for displaying flash messages.
+JavaScript package for displaying flash messages in various types with full customization capabilities.
+This package is designed to be simple and easy to use.
+It provides a simple way to display flash messages in your web applications.
 
 It can be used in pure **JavaScript** or **TypeScript** projects, or any other JavaScript framework like **React**, **Vue**, **Angular** etc.
 
@@ -34,18 +36,28 @@ You can pass the following parameters to the `Flash` constructor:
 
 The following options are available for configuration:
 
-| Option         | Type              | Default      | Description                                                                                                                                  |
-|:---------------|:------------------|:-------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
-| `icon`         | `boolean`         | `true`       | Whether to display an icon with the message.                                                                                                 |
-| `animation`    | `boolean`         | `true`       | Whether to enable animations for message.                                                                                                    |
-| `closeByClick` | `boolean`         | `true`       | Whether to close the message by clicking on it.                                                                                              |
-| `closeTimeout` | `number`          | `5000`       | The time in milliseconds after which the message will be automatically closed. (If set to `0`, the message will not be closed automatically) |
-| `pauseOnHover` | `boolean`         | `true`       | Whether to pause the `closeTimout` on message hover.                                                                                         |
-| `loading`      | `boolean`         | `true`       | Whether to enable loading bar for `closeTimout`.                                                                                             |
-| `direction`    | `string`          | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                           |
-| `position`     | `string`          | `'top-left'` | The position of the message on the page. (`'top'`, `'bottom'`, `'top-left'`, `'top-right'`, `'bottom-left'`, `'bottom-right'`)               |
-| `borderRadius` | `number`          | `8`          | The border radius of the message.                                                                                                            |
-| `fontFamily`   | `string`          | `undefined`  | The font family of the message. If not set, the body font will be applied.                                                                   |
+| Option         | Type      | Default      | Description                                                                                                                                      |
+|:---------------|:----------|:-------------|:-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `icon`         | `boolean` | `true`       | Whether to display an icon with the message.                                                                                                     |
+| `animation`    | `boolean` | `true`       | Whether to enable animations for message.                                                                                                        |
+| `closeByClick` | `boolean` | `true`       | Whether to close the message by clicking on it.                                                                                                  |
+| `closeTimeout` | `number`  | `5000`       | The time in milliseconds after which the message will be automatically closed.<br/>(If set to `0`, the message will not be closed automatically) |
+| `pauseOnHover` | `boolean` | `true`       | Whether to pause the `closeTimout` on message hover.                                                                                             |
+| `loading`      | `boolean` | `true`       | Whether to enable loading bar for `closeTimout`.                                                                                                 |
+| `direction`    | `string`  | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                               |
+| `position`     | `string`  | `'top-left'` | Position of the message on the page.                                                                                                             |
+| `borderRadius` | `number`  | `8`          | The border radius of the message.                                                                                                                |
+| `fontFamily`   | `string`  | `undefined`  | The font family of the message. If not set, the body font will be applied.                                                                       |
+
+These positions are available:
+- `'top'`
+- `'bottom'`
+- `'top-left'`
+- `'top-right'`
+- `'bottom-left'`
+- `'bottom-right'`
+
+The `top` and `bottom` positions are commonly used for mobile devices.
 
 > **Note:** Obviously, if `closeTimeout` is `0`, the loading bar will not be displayed even if it is `true`.
 
@@ -60,6 +72,8 @@ new Flash('Hello World!', 'info', {
     position: 'bottom-left'
 });
 ```
+
+> **Note:** You can customize the style of the flash types in the base configuration.
 
 ## Properties
 
@@ -116,25 +130,43 @@ function myFnc() {
 }
 ```
 
+## Action Button
+
+You can add an action button to the message by passing the `action` object to the configuration:
+
+```javascript
+import Flash from 'js-flash';
+
+new Flash('Post deleted!', 'info', {
+    position: 'bottom',
+    action: {
+        text: 'Undo',
+        handler: () => {
+            console.log('Undo clicked.');
+        }
+    }
+});
+```
+
+The `action` object have the following properties:
+
+| Property  | Type       | Description              |
+|:----------|:-----------|:-------------------------|
+| `text`    | `string`   | The button text.         |
+| `handler` | `function` | The click event handler. |
+
+> **Note:** You can customize the style of the action buttons in the base configuration.
+
 ## Base Configuration
 
-You can configure the base settings of the flash messages:
+You can configure the base settings of the flash messages by `setBaseConfig` method:
 
 ```javascript
 import Flash from 'js-flash';
 
 Flash.setBaseConfig({
     offset: 25,
-    gap: 15,
-    types: {
-        info: {
-            backgroundColor: '#3498db',
-            color: '#fff'
-        },
-        success: {
-            borderColor: '#27ae60'
-        }
-    }
+    gap: 15
 });
 ```
 
@@ -148,7 +180,7 @@ Flash.setBaseConfig({
 
 #### Types Configuration
 
-You can set these properties for different message types:
+You can set these properties for different message types in base configuration:
 
 | Property          | Description                           |
 |:------------------|:--------------------------------------|
@@ -157,8 +189,33 @@ You can set these properties for different message types:
 | `backgroundColor` | Background color.                     |
 | `borderColor`     | Border color.                         |
 | `loadingColor`    | Loading color.                        |
+| `button`          | Button style.                         |
 
-Default properties:
+Example:
+
+```javascript
+import Flash from 'js-flash';
+
+Flash.setBaseConfig({
+    types: {
+        info: {
+            backgroundColor: '#3498db',
+            color: '#fff'
+        },
+        success: {
+            borderColor: '#27ae60',
+            button: {
+                backgroundColor: '#27ae60',
+                color: '#fff'
+            }
+        }
+    }
+});
+```
+
+The above code changes the default values mentioned.
+
+Default values are:
 
 ```javascript
 types = {
@@ -167,28 +224,48 @@ types = {
         color: '#2196F3',
         backgroundColor: '#E3F2FD',
         borderColor: '#BBDEFB',
-        loadingColor: '#BBDEFB'
+        loadingColor: '#BBDEFB',
+        button: {
+            color: '#000',
+            backgroundColor: 'transparent',
+            borderColor: '#BBDEFB',
+        }
     },
     success: {
         icon: 'data:image/svg+xml,...',
         color: '#4CAF50',
         backgroundColor: '#E8F5E9',
         borderColor: '#C8E6C9',
-        loadingColor: '#C8E6C9'
+        loadingColor: '#C8E6C9',
+        button: {
+            color: '#000',
+            backgroundColor: 'transparent',
+            borderColor: '#C8E6C9',
+        }
     },
     warning: {
         icon: 'data:image/svg+xml,...',
         color: '#BD8F04',
         backgroundColor: '#FFF8E1',
         borderColor: '#FFDC74',
-        loadingColor: '#FFDC74'
+        loadingColor: '#FFDC74',
+        button: {
+            color: '#000',
+            backgroundColor: 'transparent',
+            borderColor: '#FFDC74',
+        }
     },
     error: {
         icon: 'data:image/svg+xml,...',
         color: '#F44336',
         backgroundColor: '#FFEBEE',
         borderColor: '#FFCDD2',
-        loadingColor: '#FFCDD2'
+        loadingColor: '#FFCDD2',
+        button: {
+            color: '#000',
+            backgroundColor: 'transparent',
+            borderColor: '#FFCDD2',
+        }
     }
 }
 ```
