@@ -319,6 +319,8 @@ You can use it in TypeScript projects.
 import type { BaseConfig, DeepPartial } from 'js-flash';
 ```
 
+The following types are available:
+
 | Type            | Description                                         |
 |:----------------|:----------------------------------------------------|
 | `FlashType`     | The flash message types.                            |

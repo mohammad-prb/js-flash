@@ -98,8 +98,8 @@ export default class Flash {
         this.closePromise = new Promise(resolve => this.closeResolve = resolve);
 
         /* Assign item config */
-        this.config = Object.assign({}, Flash.defaultItemConfig);
-        Object.assign(this.config, config);
+        this.config = Flash.deepMerge({} as ItemConfig, Flash.defaultItemConfig);
+        Flash.deepMerge(this.config, config);
 
         /* Add classes */
         this.el.classList.add(`fl-item`);
@@ -195,11 +195,11 @@ export default class Flash {
     }
 
     public static setBaseConfig = (config: DeepPartial<BaseConfig>): void => {
-        Object.assign(Flash.baseConfig, config);
+        Flash.deepMerge(Flash.baseConfig, config);
     }
 
     public static setItemConfig = (config: Partial<ItemConfig>): void => {
-        Object.assign(Flash.defaultItemConfig, config);
+        Flash.deepMerge(Flash.defaultItemConfig, config);
     }
 
     public static closeAll = (): void => {
@@ -229,6 +229,36 @@ export default class Flash {
                 flashItem.close();
         });
     }
+
+    private static deepMerge = <T extends Record<string, any>>(target: T, source: DeepPartial<T>): T => {
+        if (!target) return source as T;
+        if (!source) return target;
+
+        const result: any = {...target};
+
+        for (const key in source) {
+            const targetValue = target[key];
+            const sourceValue = source[key];
+
+            if (sourceValue !== undefined && sourceValue !== null) {
+                if (
+                    typeof sourceValue === 'object' &&
+                    !Array.isArray(sourceValue) &&
+                    targetValue !== undefined &&
+                    typeof targetValue === 'object' &&
+                    !Array.isArray(targetValue)
+                ) {
+                    // Recursive merge for plain objects
+                    result[key] = Flash.deepMerge(targetValue, sourceValue);
+                } else {
+                    // Direct assignment for primitives, arrays, or when types don't match
+                    result[key] = sourceValue;
+                }
+            }
+        }
+
+        return result as T;
+    };
 
     public get element(): HTMLDivElement {
         return this.el;
