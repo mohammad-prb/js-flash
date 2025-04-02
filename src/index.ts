@@ -19,7 +19,7 @@ export default class Flash {
                 borderColor: '#C8E6C9',
                 loadingColor: '#C8E6C9',
                 button: {
-                    color: '#000',
+                    color: '#4CAF50',
                     backgroundColor: 'transparent',
                     borderColor: '#C8E6C9',
                 }
@@ -31,7 +31,7 @@ export default class Flash {
                 borderColor: '#FFCDD2',
                 loadingColor: '#FFCDD2',
                 button: {
-                    color: '#000',
+                    color: '#F44336',
                     backgroundColor: 'transparent',
                     borderColor: '#FFCDD2',
                 }
@@ -43,7 +43,7 @@ export default class Flash {
                 borderColor: '#FFDC74',
                 loadingColor: '#FFDC74',
                 button: {
-                    color: '#000',
+                    color: '#BD8F04',
                     backgroundColor: 'transparent',
                     borderColor: '#FFDC74',
                 }
@@ -55,7 +55,7 @@ export default class Flash {
                 borderColor: '#BBDEFB',
                 loadingColor: '#BBDEFB',
                 button: {
-                    color: '#000',
+                    color: '#2196F3',
                     backgroundColor: 'transparent',
                     borderColor: '#BBDEFB',
                 }

@@ -1,6 +1,7 @@
 # JavaScript Flash Message (js-flash)
 
 JavaScript package for displaying flash messages in various types with full customization capabilities.
+
 This package is designed to be simple and easy to use.
 It provides a simple way to display flash messages in your web applications.
 
@@ -43,7 +44,7 @@ The following options are available for configuration:
 | `closeByClick` | `boolean` | `true`       | Whether to close the message by clicking on it.                                                                                                  |
 | `closeTimeout` | `number`  | `5000`       | The time in milliseconds after which the message will be automatically closed.<br/>(If set to `0`, the message will not be closed automatically) |
 | `pauseOnHover` | `boolean` | `true`       | Whether to pause the `closeTimout` on message hover.                                                                                             |
-| `loading`      | `boolean` | `true`       | Whether to enable loading bar for `closeTimout`.                                                                                                 |
+| `loading`      | `boolean` | `true`       | Whether to display loading bar for `closeTimout`.                                                                                                |
 | `direction`    | `string`  | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                               |
 | `position`     | `string`  | `'top-left'` | Position of the message on the page.                                                                                                             |
 | `borderRadius` | `number`  | `8`          | The border radius of the message.                                                                                                                |
@@ -71,7 +72,7 @@ new Flash('Hello World!', 'info', {
 });
 ```
 
-> **Note:** You can customize the style of the flash types in the base configuration.
+> **Note:** You can customize the style of the flash types in the [base configuration](#base-configuration).
 
 ## Properties
 
@@ -152,7 +153,7 @@ Flash.closeByPosition('bottom-right');
 
 ## Action Button
 
-You can add an action button to the message by passing the `action` object to the configuration:
+You can add an action button to the message by passing the `action` object to the constructor:
 
 ```javascript
 import Flash from 'js-flash';
@@ -175,7 +176,7 @@ The `action` object have the following properties:
 | `text`    | `string`   | The button text.         |
 | `handler` | `function` | The click event handler. |
 
-> **Note:** You can customize the style of the action buttons in the base configuration.
+> **Note:** You can customize the style of the action buttons in the base [base configuration](#base-configuration).
 
 ## Base Configuration
 
@@ -190,7 +191,7 @@ Flash.setBaseConfig({
 });
 ```
 
-### Base Configuration Options
+The following options are available:
 
 | Option   | Type     | Default         | Description                                  |
 |:---------|:---------|:----------------|:---------------------------------------------|
@@ -198,7 +199,7 @@ Flash.setBaseConfig({
 | `gap`    | `number` | `10`            | The gap between messages. (px)               |
 | `types`  | `object` | (Types section) | The properties for different message types.  |
 
-#### Types Configuration
+### Types Configuration
 
 You can set these properties for different message types in base configuration:
 
@@ -246,7 +247,7 @@ types = {
         borderColor: '#BBDEFB',
         loadingColor: '#BBDEFB',
         button: {
-            color: '#000',
+            color: '#2196F3',
             backgroundColor: 'transparent',
             borderColor: '#BBDEFB',
         }
@@ -258,7 +259,7 @@ types = {
         borderColor: '#C8E6C9',
         loadingColor: '#C8E6C9',
         button: {
-            color: '#000',
+            color: '#4CAF50',
             backgroundColor: 'transparent',
             borderColor: '#C8E6C9',
         }
@@ -270,7 +271,7 @@ types = {
         borderColor: '#FFDC74',
         loadingColor: '#FFDC74',
         button: {
-            color: '#000',
+            color: '#BD8F04',
             backgroundColor: 'transparent',
             borderColor: '#FFDC74',
         }
@@ -282,7 +283,7 @@ types = {
         borderColor: '#FFCDD2',
         loadingColor: '#FFCDD2',
         button: {
-            color: '#000',
+            color: '#F44336',
             backgroundColor: 'transparent',
             borderColor: '#FFCDD2',
         }
@@ -316,7 +317,7 @@ This package is written in TypeScript and includes type definitions.
 You can use it in TypeScript projects.
 
 ```typescript
-import type { BaseConfig, DeepPartial } from 'js-flash';
+import type { BaseConfig, ItemConfig } from 'js-flash';
 ```
 
 The following types are available:
