@@ -1,3 +1,7 @@
+export type DeepPartial<T> = {
+    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
 export type FlashType = 'success' | 'error' | 'warning' | 'info';
 
 export interface BaseConfig {

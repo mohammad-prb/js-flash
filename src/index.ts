@@ -3,7 +3,7 @@ import errorIcon from './icons/error.svg';
 import infoIcon from './icons/info.svg';
 import successIcon from './icons/success.svg';
 import warningIcon from './icons/warning.svg';
-import type {BaseConfig, ItemConfig, FlashType} from './interface';
+import type {FlashType, ItemConfig, BaseConfig, DeepPartial} from './interface';
 
 export default class Flash {
     private static list: Flash[] = [];
@@ -123,7 +123,7 @@ export default class Flash {
         document.body.appendChild(this.el);
     }
 
-    static setBaseConfig = (config: Partial<BaseConfig>): void => {
+    static setBaseConfig = (config: DeepPartial<BaseConfig>): void => {
         Object.assign(Flash.baseConfig, config);
     }
 
@@ -183,4 +183,4 @@ export default class Flash {
     }
 }
 
-export type {BaseConfig, ItemConfig, FlashType};
+export type {FlashType, ItemConfig, BaseConfig, DeepPartial};

@@ -1,6 +1,6 @@
 {
     "name": "js-flash",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "JavaScript package for flash messages.",
     "type": "module",
     "main": "./dist/index.umd.js",
@@ -28,7 +28,10 @@
         "message",
         "flash message",
         "notification",
-        "alert"
+        "alert",
+        "Vue",
+        "React",
+        "Angular"
     ],
     "author": "Mohammad Pourbehzad <pspipm27@gmail.com>",
     "sideEffects": ["**/*.css"],

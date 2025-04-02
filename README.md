@@ -119,7 +119,7 @@ import Flash from 'js-flash';
 Flash.setBaseConfig({
     offset: 25,
     gap: 15,
-    styles: {
+    types: {
         info: {
             backgroundColor: '#3498db',
             color: '#fff'
@@ -205,7 +205,37 @@ This package is written in TypeScript and includes type definitions.
 You can use it in TypeScript projects.
 
 ```typescript
-import type { BaseConfig, ItemConfig, FlashType } from 'js-flash';
+import type { FlashType, ItemConfig, BaseConfig, DeepPartial } from 'js-flash';
+```
+
+| Type          | Description                                         |
+|:--------------|:----------------------------------------------------|
+| `FlashType`   | The flash message types.                            |
+| `ItemConfig`  | Configuration object for each item.                 |
+| `BaseConfig`  | Base configuration object.                          |
+| `DeepPartial` | The utitily type to make objects optional in depth. |
+
+example:
+
+```typescript
+import Flash from 'js-flash';
+import type { BaseConfig, DeepPartial } from 'js-flash';
+
+const obj: DeepPartial<BaseConfig> = {
+    offset: 25,
+    gap: 15,
+    types: {
+        info: {
+            backgroundColor: '#3498db',
+            color: '#fff'
+        },
+        success: {
+            borderColor: '#27ae60'
+        }
+    }
+}
+
+Flash.setBaseConfig(obj);
 ```
 
 ## Future Plans
