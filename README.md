@@ -38,12 +38,15 @@ The following options are available for configuration:
 |:---------------|:------------------|:-------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
 | `icon`         | `boolean`         | `true`       | Whether to display an icon with the message.                                                                                                 |
 | `animation`    | `boolean`         | `true`       | Whether to enable animations for message.                                                                                                    |
+| `loading`      | `boolean`         | `true`       | Whether to enable loading bar for message. (Depends on `closeTimout`)                                                                        |
 | `closeByClick` | `boolean`         | `true`       | Whether to close the message by clicking on it.                                                                                              |
 | `closeTimeout` | `number`          | `5000`       | The time in milliseconds after which the message will be automatically closed. (If set to `0`, the message will not be closed automatically) |
 | `direction`    | `string`          | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                           |
 | `position`     | `string`          | `'top-left'` | The position of the message on the page. (`'top'`, `'bottom'`, `'top-left'`, `'top-right'`, `'bottom-left'`, `'bottom-right'`)               |
 | `borderRadius` | `number`          | `12`         | The border radius of the message.                                                                                                            |
 | `fontFamily`   | `string`          | `undefined`  | The font family of the message. If not set, the body font will be applied.                                                                   |
+
+> **Note:** Obviously, if `closeTimeout` is `0`, the loading bar will not be displayed even if it is `true`.
 
 #### Example with options
 
@@ -145,38 +148,43 @@ You can set these properties for different message types:
 
 | Property          | Description                           |
 |:------------------|:--------------------------------------|
+| `icon`            | Icon data URL. (`data:image/svg+xml`) |
 | `color`           | Text and icon color.                  |
 | `backgroundColor` | Background color.                     |
 | `borderColor`     | Border color.                         |
-| `icon`            | Icon data URL. (`data:image/svg+xml`) |
+| `loadingColor`    | Loading color.                        |
 
 Default properties:
 
 ```javascript
 types = {
     info: {
+        icon: 'data:image/svg+xml,...',
         color: '#2196F3',
         backgroundColor: '#E3F2FD',
         borderColor: '#BBDEFB',
-        icon: 'data:image/svg+xml,...'
+        loadingColor: '#2196F3'
     },
     success: {
+        icon: 'data:image/svg+xml,...',
         color: '#4CAF50',
         backgroundColor: '#E8F5E9',
         borderColor: '#C8E6C9',
-        icon: 'data:image/svg+xml,...'
+        loadingColor: '#4CAF50'
     },
     warning: {
+        icon: 'data:image/svg+xml,...',
         color: '#BD8F04',
         backgroundColor: '#FFF8E1',
         borderColor: '#FFDC74',
-        icon: 'data:image/svg+xml,...'
+        loadingColor: '#BD8F04'
     },
     error: {
+        icon: 'data:image/svg+xml,...',
         color: '#F44336',
         backgroundColor: '#FFEBEE',
         borderColor: '#FFCDD2',
-        icon: 'data:image/svg+xml,...'
+        loadingColor: '#F44336'
     }
 }
 ```
@@ -191,6 +199,7 @@ import Flash from 'js-flash';
 Flash.setItemConfig({
     icon: false,
     animation: false,
+    loading: false,
     closeByClick: false,
     closeTimeout: 0,
     position: 'bottom-right',

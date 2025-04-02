@@ -17,24 +17,28 @@ export default class Flash {
                 color: '#4CAF50',
                 backgroundColor: '#E8F5E9',
                 borderColor: '#C8E6C9',
+                loadingColor: '#4CAF50',
             },
             error: {
                 icon: errorIcon,
                 color: '#F44336',
                 backgroundColor: '#FFEBEE',
                 borderColor: '#FFCDD2',
+                loadingColor: '#F44336',
             },
             warning: {
                 icon: warningIcon,
                 color: '#BD8F04',
                 backgroundColor: '#FFF8E1',
                 borderColor: '#FFDC74',
+                loadingColor: '#BD8F04',
             },
             info: {
                 icon: infoIcon,
                 color: '#2196F3',
                 backgroundColor: '#E3F2FD',
                 borderColor: '#BBDEFB',
+                loadingColor: '#2196F3',
             }
         }
     };
@@ -42,6 +46,7 @@ export default class Flash {
     private static defaultItemConfig: ItemConfig = {
         icon: true,
         animation: true,
+        loading: true,
         closeByClick: true,
         closeTimeout: 5000,
         direction: 'ltr',
@@ -117,6 +122,22 @@ export default class Flash {
         /* Apply close timeout */
         if (this.config.closeTimeout > 0) {
             setTimeout(() => this.close(), this.config.closeTimeout);
+
+            /* Add loading */
+            if (this.config.loading) {
+                const loading = document.createElement('div');
+                loading.classList.add('fl-loading');
+                loading.style.backgroundColor = Flash.baseConfig.types[type].loadingColor;
+                loading.style.animation = `fl-loading ${this.config.closeTimeout / 1000}s linear`;
+                loading.style.animationFillMode = 'both';
+
+                if (this.config.direction == 'rtl')
+                    loading.style.right = '0';
+                else
+                    loading.style.left = '0';
+
+                this.el.appendChild(loading);
+            }
         }
 
         this.fixPosition();

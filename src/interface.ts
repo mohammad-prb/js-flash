@@ -13,6 +13,7 @@ export interface BaseConfig {
 export interface ItemConfig {
     icon: boolean;
     animation: boolean;
+    loading: boolean;
     closeByClick: boolean;
     closeTimeout: number;
     direction: 'ltr' | 'rtl';
@@ -26,4 +27,5 @@ export interface ItemStyle {
     color: string;
     backgroundColor: string;
     borderColor: string;
+    loadingColor: string;
 }
