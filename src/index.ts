@@ -3,7 +3,7 @@ import errorIcon from './icons/error.svg';
 import infoIcon from './icons/info.svg';
 import successIcon from './icons/success.svg';
 import warningIcon from './icons/warning.svg';
-import type {FlashType, ItemConfig, BaseConfig, DeepPartial} from './interface';
+import type {FlashType, FlashPosition, ItemConfig, BaseConfig, DeepPartial} from './interface';
 
 export default class Flash {
     private static list: Flash[] = [];
@@ -194,12 +194,40 @@ export default class Flash {
         document.body.appendChild(this.el);
     }
 
-    static setBaseConfig = (config: DeepPartial<BaseConfig>): void => {
+    public static setBaseConfig = (config: DeepPartial<BaseConfig>): void => {
         Object.assign(Flash.baseConfig, config);
     }
 
-    static setItemConfig = (config: Partial<ItemConfig>): void => {
+    public static setItemConfig = (config: Partial<ItemConfig>): void => {
         Object.assign(Flash.defaultItemConfig, config);
+    }
+
+    public static closeAll = (): void => {
+        Flash.list.forEach((flashItem) => flashItem.close());
+    }
+
+    public static closeFirst = (): void => {
+        const first = Flash.list[0];
+        if (first) first.close();
+    }
+
+    public static closeLast = (): void => {
+        const last = Flash.list[Flash.list.length - 1];
+        if (last) last.close();
+    }
+
+    public static closeByType = (type: FlashType): void => {
+        Flash.list.forEach((flashItem) => {
+            if (flashItem.messageType == type)
+                flashItem.close();
+        });
+    }
+
+    public static closeByPosition = (position: string): void => {
+        Flash.list.forEach((flashItem) => {
+            if (flashItem.itemConfig.position == position)
+                flashItem.close();
+        });
     }
 
     public get element(): HTMLDivElement {
@@ -268,4 +296,4 @@ export default class Flash {
     }
 }
 
-export type {FlashType, ItemConfig, BaseConfig, DeepPartial};
+export type {FlashType, FlashPosition, ItemConfig, BaseConfig, DeepPartial};

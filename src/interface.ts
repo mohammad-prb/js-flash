@@ -3,6 +3,7 @@ export type DeepPartial<T> = {
 };
 
 export type FlashType = 'success' | 'error' | 'warning' | 'info';
+export type FlashPosition = 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
 export interface BaseConfig {
     offset: number;
@@ -18,7 +19,7 @@ export interface ItemConfig {
     pauseOnHover: boolean;
     loading: boolean;
     direction: 'ltr' | 'rtl';
-    position: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    position: FlashPosition;
     borderRadius: number;
     fontFamily?: string;
     action?: {

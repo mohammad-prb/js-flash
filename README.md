@@ -130,6 +130,26 @@ function myFnc() {
 }
 ```
 
+Also these methods are available as static methods:
+
+| Method                      | Description                                    |
+|:----------------------------|:-----------------------------------------------|
+| `closeAll()`                | Closes all messages.                           |
+| `closeFirst()`              | Closes the first message. (On the page)        |
+| `closeLast()`               | Closes the last message. (On the page)         |
+| `closeByType(type)`         | Closes all messages of the specified type.     |
+| `closeByPosition(position)` | Closes all messages of the specified position. |
+
+example:
+
+```javascript
+import Flash from 'js-flash';
+
+Flash.closeAll();
+Flash.closeByType('warning');
+Flash.closeByPosition('bottom-right');
+```
+
 ## Action Button
 
 You can add an action button to the message by passing the `action` object to the configuration:
@@ -296,15 +316,16 @@ This package is written in TypeScript and includes type definitions.
 You can use it in TypeScript projects.
 
 ```typescript
-import type { FlashType, ItemConfig, BaseConfig, DeepPartial } from 'js-flash';
+import type { BaseConfig, DeepPartial } from 'js-flash';
 ```
 
-| Type          | Description                                         |
-|:--------------|:----------------------------------------------------|
-| `FlashType`   | The flash message types.                            |
-| `ItemConfig`  | Configuration object for each item.                 |
-| `BaseConfig`  | Base configuration object.                          |
-| `DeepPartial` | The utitily type to make objects optional in depth. |
+| Type            | Description                                         |
+|:----------------|:----------------------------------------------------|
+| `FlashType`     | The flash message types.                            |
+| `FlashPosition` | The flash message positions.                        |
+| `ItemConfig`    | Configuration object for each item.                 |
+| `BaseConfig`    | Base configuration object.                          |
+| `DeepPartial`   | The utitily type to make objects optional in depth. |
 
 example:
 
