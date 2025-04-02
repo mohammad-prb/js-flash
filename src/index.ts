@@ -17,28 +17,28 @@ export default class Flash {
                 color: '#4CAF50',
                 backgroundColor: '#E8F5E9',
                 borderColor: '#C8E6C9',
-                loadingColor: '#4CAF50',
+                loadingColor: '#C8E6C9',
             },
             error: {
                 icon: errorIcon,
                 color: '#F44336',
                 backgroundColor: '#FFEBEE',
                 borderColor: '#FFCDD2',
-                loadingColor: '#F44336',
+                loadingColor: '#FFCDD2',
             },
             warning: {
                 icon: warningIcon,
                 color: '#BD8F04',
                 backgroundColor: '#FFF8E1',
                 borderColor: '#FFDC74',
-                loadingColor: '#BD8F04',
+                loadingColor: '#FFDC74',
             },
             info: {
                 icon: infoIcon,
                 color: '#2196F3',
                 backgroundColor: '#E3F2FD',
                 borderColor: '#BBDEFB',
-                loadingColor: '#2196F3',
+                loadingColor: '#BBDEFB',
             }
         }
     };
@@ -51,7 +51,7 @@ export default class Flash {
         closeTimeout: 5000,
         direction: 'ltr',
         position: 'top-left',
-        borderRadius: 12,
+        borderRadius: 8,
     };
 
     private el: HTMLDivElement = document.createElement("div");

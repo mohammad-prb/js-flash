@@ -43,7 +43,7 @@ The following options are available for configuration:
 | `closeTimeout` | `number`          | `5000`       | The time in milliseconds after which the message will be automatically closed. (If set to `0`, the message will not be closed automatically) |
 | `direction`    | `string`          | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                           |
 | `position`     | `string`          | `'top-left'` | The position of the message on the page. (`'top'`, `'bottom'`, `'top-left'`, `'top-right'`, `'bottom-left'`, `'bottom-right'`)               |
-| `borderRadius` | `number`          | `12`         | The border radius of the message.                                                                                                            |
+| `borderRadius` | `number`          | `8`          | The border radius of the message.                                                                                                            |
 | `fontFamily`   | `string`          | `undefined`  | The font family of the message. If not set, the body font will be applied.                                                                   |
 
 > **Note:** Obviously, if `closeTimeout` is `0`, the loading bar will not be displayed even if it is `true`.
@@ -81,6 +81,7 @@ import Flash from 'js-flash';
 const flash = new Flash('Hello World!', 'info');
 
 flash.element.classList.add('custom-class');
+flash.element.style.opacity = "0.5";
 
 flash.whenClosed.then(() => {
     console.log('Message closed');
@@ -163,28 +164,28 @@ types = {
         color: '#2196F3',
         backgroundColor: '#E3F2FD',
         borderColor: '#BBDEFB',
-        loadingColor: '#2196F3'
+        loadingColor: '#BBDEFB'
     },
     success: {
         icon: 'data:image/svg+xml,...',
         color: '#4CAF50',
         backgroundColor: '#E8F5E9',
         borderColor: '#C8E6C9',
-        loadingColor: '#4CAF50'
+        loadingColor: '#C8E6C9'
     },
     warning: {
         icon: 'data:image/svg+xml,...',
         color: '#BD8F04',
         backgroundColor: '#FFF8E1',
         borderColor: '#FFDC74',
-        loadingColor: '#BD8F04'
+        loadingColor: '#FFDC74'
     },
     error: {
         icon: 'data:image/svg+xml,...',
         color: '#F44336',
         backgroundColor: '#FFEBEE',
         borderColor: '#FFCDD2',
-        loadingColor: '#F44336'
+        loadingColor: '#FFCDD2'
     }
 }
 ```
@@ -203,7 +204,7 @@ Flash.setItemConfig({
     closeByClick: false,
     closeTimeout: 0,
     position: 'bottom-right',
-    borderRadius: 8,
+    borderRadius: 12,
     fontFamily: 'Arial'
 });
 ```
