@@ -38,9 +38,10 @@ The following options are available for configuration:
 |:---------------|:------------------|:-------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
 | `icon`         | `boolean`         | `true`       | Whether to display an icon with the message.                                                                                                 |
 | `animation`    | `boolean`         | `true`       | Whether to enable animations for message.                                                                                                    |
-| `loading`      | `boolean`         | `true`       | Whether to enable loading bar for message. (Depends on `closeTimout`)                                                                        |
 | `closeByClick` | `boolean`         | `true`       | Whether to close the message by clicking on it.                                                                                              |
 | `closeTimeout` | `number`          | `5000`       | The time in milliseconds after which the message will be automatically closed. (If set to `0`, the message will not be closed automatically) |
+| `pauseOnHover` | `boolean`         | `true`       | Whether to pause the `closeTimout` on message hover.                                                                                         |
+| `loading`      | `boolean`         | `true`       | Whether to enable loading bar for `closeTimout`.                                                                                             |
 | `direction`    | `string`          | `'ltr'`      | The direction of the message. (`'ltr'` or `'rtl'`)                                                                                           |
 | `position`     | `string`          | `'top-left'` | The position of the message on the page. (`'top'`, `'bottom'`, `'top-left'`, `'top-right'`, `'bottom-left'`, `'bottom-right'`)               |
 | `borderRadius` | `number`          | `8`          | The border radius of the message.                                                                                                            |
@@ -94,9 +95,11 @@ flash.whenClosed.then(() => {
 
 You can use the following methods to interact with the flash message:
 
-| Method    | Description         |
-|:----------|:--------------------|
-| `close()` | Closes the message. |
+| Method          | Description          |
+|:----------------|:---------------------|
+| `close()`       | Closes the message.  |
+| `pauseTimout()` | Pause `closeTimout`. |
+| `playTimout()`  | Play `closeTimout`.  |
 
 example:
 
@@ -200,9 +203,10 @@ import Flash from 'js-flash';
 Flash.setItemConfig({
     icon: false,
     animation: false,
-    loading: false,
     closeByClick: false,
     closeTimeout: 0,
+    pauseOnHover: false,
+    loading: false,
     position: 'bottom-right',
     borderRadius: 12,
     fontFamily: 'Arial'

@@ -46,9 +46,10 @@ export default class Flash {
     private static defaultItemConfig: ItemConfig = {
         icon: true,
         animation: true,
-        loading: true,
         closeByClick: true,
         closeTimeout: 5000,
+        pauseOnHover: true,
+        loading: true,
         direction: 'ltr',
         position: 'top-left',
         borderRadius: 8,
@@ -62,6 +63,12 @@ export default class Flash {
     private isClosed: boolean = false;
     private closeResolve!: (value: void | PromiseLike<void>) => void;
     private readonly closePromise: Promise<void>;
+
+    private timeout = {
+        id: 0,
+        startTime: 0,
+        remaining: 0,
+    }
 
     constructor(message: string, type: FlashType, config: Partial<ItemConfig> = {}) {
         Flash.list.push(this);
@@ -121,7 +128,16 @@ export default class Flash {
 
         /* Apply close timeout */
         if (this.config.closeTimeout > 0) {
-            setTimeout(() => this.close(), this.config.closeTimeout);
+            this.timeout.startTime = Date.now();
+            this.timeout.remaining = this.config.closeTimeout;
+            this.timeout.id = setTimeout(() => this.close(), this.config.closeTimeout);
+
+            /* Apply pause on hover */
+            if (this.config.pauseOnHover) {
+                this.el.dataset.pausable = '1';
+                this.el.addEventListener('mouseover', () => this.pauseTimout());
+                this.el.addEventListener('mouseout', () => this.playTimout());
+            }
 
             /* Add loading */
             if (this.config.loading) {
@@ -186,6 +202,18 @@ export default class Flash {
         const index = Flash.list.indexOf(this);
         Flash.list.splice(index, 1);
         Flash.list.forEach((flashItem) => flashItem.fixPosition());
+    }
+
+    public pauseTimout = (): void => {
+        clearTimeout(this.timeout.id);
+        this.timeout.remaining -= Date.now() - this.timeout.startTime;
+        console.log('Pause', this.timeout.remaining); //test
+    }
+
+    public playTimout = (): void => {
+        this.timeout.startTime = Date.now();
+        this.timeout.id = setTimeout(() => this.close(), this.timeout.remaining);
+        console.log('Play'); //test
     }
 
     private fixPosition = (): void => {

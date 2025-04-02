@@ -24,10 +24,6 @@
     opacity: 1;
     transition: var(--animation-speed);
 }
-.fl-item[data-animation="1"] {
-    animation: fl-slide var(--animation-speed);
-    animation-fill-mode: both;
-}
 .fl-icon {
     flex-shrink: 0;
     width: 24px;
@@ -39,6 +35,18 @@
     width: 100%;
     height: 2px;
     border-radius: 2px;
+}
+
+/* Animations */
+.fl-item[data-animation="1"] {
+    animation: fl-slide var(--animation-speed);
+    animation-fill-mode: both;
+}
+.fl-item[data-pausable="1"] .fl-loading {
+    animation-play-state: running;
+}
+.fl-item[data-pausable="1"]:hover .fl-loading {
+    animation-play-state: paused;
 }
 
 /* Top and bottom flash animations */
