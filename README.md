@@ -59,8 +59,6 @@ These positions are available:
 
 The `top` and `bottom` positions are commonly used for mobile devices.
 
-> **Note:** Obviously, if `closeTimeout` is `0`, the loading bar will not be displayed even if it is `true`.
-
 #### Example with options
 
 ```javascript
@@ -135,10 +133,12 @@ Also these methods are available as static methods:
 | Method                      | Description                                    |
 |:----------------------------|:-----------------------------------------------|
 | `closeAll()`                | Closes all messages.                           |
-| `closeFirst()`              | Closes the first message. (On the page)        |
-| `closeLast()`               | Closes the last message. (On the page)         |
+| `closeFirst()`              | Closes the first message.                      |
+| `closeLast()`               | Closes the last message.                       |
 | `closeByType(type)`         | Closes all messages of the specified type.     |
 | `closeByPosition(position)` | Closes all messages of the specified position. |
+
+> **Note:** All of these methods apply to live messages.
 
 example:
 

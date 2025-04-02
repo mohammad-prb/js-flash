@@ -230,34 +230,25 @@ export default class Flash {
         });
     }
 
-    private static deepMerge = <T extends Record<string, any>>(target: T, source: DeepPartial<T>): T => {
-        if (!target) return source as T;
+    private static deepMerge = <T extends Record<string, any>>(target: T, ...sources: DeepPartial<T>[]): T => {
+        if (!sources.length) return target;
+        const source = sources.shift();
         if (!source) return target;
 
-        const result: any = {...target};
+        const isObject = (item: DeepPartial<T>) => (item && typeof item === 'object' && !Array.isArray(item));
 
-        for (const key in source) {
-            const targetValue = target[key];
-            const sourceValue = source[key];
-
-            if (sourceValue !== undefined && sourceValue !== null) {
-                if (
-                    typeof sourceValue === 'object' &&
-                    !Array.isArray(sourceValue) &&
-                    targetValue !== undefined &&
-                    typeof targetValue === 'object' &&
-                    !Array.isArray(targetValue)
-                ) {
-                    // Recursive merge for plain objects
-                    result[key] = Flash.deepMerge(targetValue, sourceValue);
+        if (isObject(target) && isObject(source)) {
+            for (const key in source) {
+                if (source[key] && isObject(source[key])) {
+                    if (!target[key]) Object.assign(target, {[key]: {}});
+                    Flash.deepMerge(target[key], source[key]);
                 } else {
-                    // Direct assignment for primitives, arrays, or when types don't match
-                    result[key] = sourceValue;
+                    Object.assign(target, {[key]: source[key]});
                 }
             }
         }
 
-        return result as T;
+        return Flash.deepMerge(target, ...sources);
     };
 
     public get element(): HTMLDivElement {
