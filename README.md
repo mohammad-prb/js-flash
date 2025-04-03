@@ -13,7 +13,7 @@ It can be used in pure **JavaScript** or **TypeScript** projects, or any other J
 
 ```html
 <!-- Current version -->
-<script src="https://unpkg.com/js-flash@1.4.2"></script>
+<script src="https://unpkg.com/js-flash@1.4.3"></script>
 
 <!-- Always the latest version -->
 <script src="https://unpkg.com/js-flash"></script>
@@ -33,7 +33,8 @@ import Flash from 'js-flash';
 new Flash('Hello World!', 'info');
 ```
 
-> **Note:** If you are using CDN, you don't need to import, just use it.
+> [!NOTE]
+> If you are using CDN, you don't need to import anything, just use it.
 
 You can pass the following parameters to the `Flash` constructor:
 
@@ -70,8 +71,6 @@ These positions are available:
 - `'bottom-left'`
 - `'bottom-right'`
 
-The `top` and `bottom` positions are commonly used for mobile devices.
-
 #### Example with options
 
 ```javascript
@@ -84,20 +83,27 @@ new Flash('Hello World!', 'info', {
 });
 ```
 
-> **Note:** You can customize the style of the flash types in the [types configuration](#types-configuration).
+### Demo
+
+Flash messages look like this. (In `ltr` and `rtl` mode)
+
+![Flash message demo image](https://github.com/user-attachments/assets/45782d86-5e7f-4424-8251-860cd392f805)
+
+> [!NOTE]
+> You can customize the style of the flash messages in the [types configuration](#types-configuration).
 
 ## Properties
 
 You can access the following properties of the flash message:
 
-| Property      | Type             | Description                                          |
-|:--------------|:-----------------|:-----------------------------------------------------|
-| `element`     | `HTMLDivElement` | The message element.                                 |
-| `messageText` | `string`         | The message text.                                    |
-| `messageType` | `string`         | The message type.                                    |
-| `itemConfig`  | `object`         | The message configuration.                           |
-| `closed`      | `boolean`        | Whether the message is closed.                       |
-| `whenClosed`  | `Promise<void>`  | The promise that resolves when the message is closed |
+| Property      | Type             | Description                                           |
+|:--------------|:-----------------|:------------------------------------------------------|
+| `element`     | `HTMLDivElement` | The message element.                                  |
+| `messageText` | `string`         | The message text.                                     |
+| `messageType` | `string`         | The message type.                                     |
+| `itemConfig`  | `object`         | The message configuration.                            |
+| `closed`      | `boolean`        | Whether the message is closed.                        |
+| `whenClosed`  | `Promise<void>`  | The promise that resolves when the message is closed. |
 
 example:
 
@@ -114,7 +120,8 @@ flash.whenClosed.then(() => {
 });
 ```
 
-> **Note:** all properties are read-only.
+> [!IMPORTANT]
+> all properties are read-only.
 
 ## Methods
 
@@ -151,7 +158,8 @@ Also these methods are available as static methods:
 | `closeByType(type)`         | Closes all messages of the specified type.     |
 | `closeByPosition(position)` | Closes all messages of the specified position. |
 
-> **Note:** All of these methods apply to live messages.
+> [!NOTE]
+> Obviously, all of these methods apply to live messages.
 
 example:
 
@@ -188,7 +196,8 @@ The `action` object have the following properties:
 | `text`    | `string`   | The button text.         |
 | `handler` | `function` | The click event handler. |
 
-> **Note:** You can customize the style of the action buttons in the [types configuration](#types-configuration).
+> [!NOTE]
+> You can customize the style of the action buttons in the [types configuration](#types-configuration).
 
 ## Base Configuration
 
@@ -310,7 +319,7 @@ You can configure the default settings for each message. (Constructor options)
 ```javascript
 import Flash from 'js-flash';
 
-Flash.setItemConfig({
+Flash.setDefaultItemConfig({
     icon: false,
     animation: false,
     closeByClick: false,

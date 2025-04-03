@@ -6,8 +6,10 @@ import warningIcon from './icons/warning.svg';
 import type {FlashType, FlashPosition, ItemConfig, BaseConfig, DeepPartial} from './interface';
 
 export default class Flash {
+    /** Live flash message list. */
     private static list: Flash[] = [];
 
+    /** Base configuration. */
     private static baseConfig: BaseConfig = {
         offset: 20,
         gap: 10,
@@ -63,6 +65,7 @@ export default class Flash {
         }
     };
 
+    /** Default configuration for each item. */
     private static defaultItemConfig: ItemConfig = {
         icon: true,
         animation: true,
@@ -75,22 +78,44 @@ export default class Flash {
         borderRadius: 8,
     };
 
+    /** Flash message root element. */
     private el: HTMLDivElement = document.createElement("div");
+
+    /** Loading bar element. */
     private loading: HTMLDivElement = document.createElement("div");
+
+    /** Message text. */
     private readonly message: string;
+
+    /** Message type. */
     private readonly type: FlashType;
+
+    /** Message configuration. */
     private readonly config: ItemConfig;
 
+    /** Message status. */
     private isClosed: boolean = false;
+
+    /** Message close resolve. (For closePromise) */
     private closeResolve!: (value: void | PromiseLike<void>) => void;
+
+    /** Message close promise. */
     private readonly closePromise: Promise<void>;
 
+    /** Message timeout. */
     private timeout = {
         id: 0,
         startTime: 0,
         remaining: 0,
     }
 
+    /**
+     * Flash message.
+     * > [Documents](https://github.com/mohammad-prb/js-flash)
+     * @param {string} message - The message to display.
+     * @param {string} type - The type of the message.
+     * @param {object} [config] - An optional object for configuration.
+     * */
     constructor(message: string, type: FlashType, config: Partial<ItemConfig> = {}) {
         Flash.list.push(this);
         this.message = message;
@@ -194,28 +219,43 @@ export default class Flash {
         document.body.appendChild(this.el);
     }
 
+    /**
+     * Set base flash message settings.
+     * @param {object} config - Base configuration.
+     * */
     public static setBaseConfig = (config: DeepPartial<BaseConfig>): void => {
         Flash.deepMerge(Flash.baseConfig, config);
     }
 
-    public static setItemConfig = (config: Partial<ItemConfig>): void => {
+    /**
+     * Setting flash message defaults.
+     * @param {object} config - Default configuration.
+     * */
+    public static setDefaultItemConfig = (config: Partial<ItemConfig>): void => {
         Flash.deepMerge(Flash.defaultItemConfig, config);
     }
 
+    /** Closes all messages. */
     public static closeAll = (): void => {
         Flash.list.forEach((flashItem) => flashItem.close());
     }
 
+    /** Closes the first message. */
     public static closeFirst = (): void => {
         const first = Flash.list[0];
         if (first) first.close();
     }
 
+    /** Closes the last message. */
     public static closeLast = (): void => {
         const last = Flash.list[Flash.list.length - 1];
         if (last) last.close();
     }
 
+    /**
+     * Closes all messages of the specified type.
+     * @param {string} type - Flash type.
+     * */
     public static closeByType = (type: FlashType): void => {
         Flash.list.forEach((flashItem) => {
             if (flashItem.messageType == type)
@@ -223,13 +263,23 @@ export default class Flash {
         });
     }
 
-    public static closeByPosition = (position: string): void => {
+    /**
+     * Closes all messages of the specified position.
+     * @param {string} position - Flash position.
+     * */
+    public static closeByPosition = (position: FlashPosition): void => {
         Flash.list.forEach((flashItem) => {
             if (flashItem.itemConfig.position == position)
                 flashItem.close();
         });
     }
 
+    /**
+     * Merge objects in depth.
+     * @param {object} target - Target object.
+     * @param {object} sources[] - Objects that are copied to the target object.
+     * @returns Target object.
+     * */
     private static deepMerge = <T extends Record<string, any>>(target: T, ...sources: DeepPartial<T>[]): T => {
         if (!sources.length) return target;
         const source = sources.shift();
@@ -251,30 +301,55 @@ export default class Flash {
         return Flash.deepMerge(target, ...sources);
     };
 
+    /**
+     * The message element.
+     * @returns {HTMLDivElement}
+     * */
     public get element(): HTMLDivElement {
         return this.el;
     }
 
+    /**
+     * The message text.
+     * @returns {string}
+     * */
     public get messageText(): string {
         return this.message;
     }
 
+    /**
+     * The message type.
+     * @returns {string}
+     * */
     public get messageType(): FlashType {
         return this.type;
     }
 
+    /**
+     * The message configuration.
+     * @returns {object}
+     * */
     public get itemConfig(): ItemConfig {
         return this.config;
     }
 
+    /**
+     * Whether the message is closed.
+     * @returns {boolean}
+     * */
     public get closed(): boolean {
         return this.isClosed;
     }
 
+    /**
+     * The promise that resolves when the message is closed.
+     * @returns {Promise}
+     * */
     public get whenClosed(): Promise<void> {
         return this.closePromise;
     }
 
+    /** Closes the message. */
     public close = (): void => {
         this.isClosed = true;
         this.closeResolve();
@@ -287,6 +362,7 @@ export default class Flash {
         Flash.list.forEach((flashItem) => flashItem.fixPosition());
     }
 
+    /** Pause `closeTimout`. */
     public pauseTimout = (): void => {
         clearTimeout(this.timeout.id);
         this.timeout.remaining -= Date.now() - this.timeout.startTime;
@@ -294,6 +370,7 @@ export default class Flash {
         this.loading.style.animationPlayState = 'paused';
     }
 
+    /** Play `closeTimout`. */
     public playTimout = (): void => {
         this.timeout.startTime = Date.now();
         this.timeout.id = setTimeout(() => this.close(), this.timeout.remaining);
@@ -301,6 +378,7 @@ export default class Flash {
         this.loading.style.animationPlayState = 'running';
     }
 
+    /** Calculating message position. */
     private fixPosition = (): void => {
         let value = Flash.baseConfig.offset;
         for (const flashItem of Flash.list) {
