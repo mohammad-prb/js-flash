@@ -36,6 +36,9 @@
     "author": "Mohammad Pourbehzad <pspipm27@gmail.com>",
     "sideEffects": ["**/*.css"],
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/mohammad-prb/js-flash/issues"
+    },
     "homepage": "https://github.com/mohammad-prb/js-flash",
     "devDependencies": {
         "@types/node": "^22.13.14",

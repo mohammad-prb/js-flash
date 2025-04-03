@@ -34,10 +34,12 @@
 }
 .fl-btn {
     flex-shrink: 0;
-    padding: 2px 8px;
+    padding: 2px 10px;
     border-radius: 4px;
     cursor: pointer;
+    border: 0;
     outline: 1px solid;  /* outline-color with js */
+    font-family: unset;
     font-size: 0.875em;
 }
 .fl-loading {

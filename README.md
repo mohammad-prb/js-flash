@@ -9,7 +9,17 @@ It can be used in pure **JavaScript** or **TypeScript** projects, or any other J
 
 ## How to use
 
-Install the package using `npm`:
+1. Using CDN:
+
+```html
+<!-- Current version -->
+<script src="https://unpkg.com/js-flash@1.4.2"></script>
+
+<!-- Always the latest version -->
+<script src="https://unpkg.com/js-flash"></script>
+```
+
+2. Install the package using `npm`:
 
 ```bash
 npm i js-flash
@@ -22,6 +32,8 @@ import Flash from 'js-flash';
 
 new Flash('Hello World!', 'info');
 ```
+
+> **Note:** If you are using CDN, you don't need to import, just use it.
 
 You can pass the following parameters to the `Flash` constructor:
 
@@ -72,7 +84,7 @@ new Flash('Hello World!', 'info', {
 });
 ```
 
-> **Note:** You can customize the style of the flash types in the [base configuration](#base-configuration).
+> **Note:** You can customize the style of the flash types in the [types configuration](#types-configuration).
 
 ## Properties
 
@@ -176,7 +188,7 @@ The `action` object have the following properties:
 | `text`    | `string`   | The button text.         |
 | `handler` | `function` | The click event handler. |
 
-> **Note:** You can customize the style of the action buttons in the base [base configuration](#base-configuration).
+> **Note:** You can customize the style of the action buttons in the [types configuration](#types-configuration).
 
 ## Base Configuration
 
@@ -210,7 +222,7 @@ You can set these properties for different message types in base configuration:
 | `backgroundColor` | Background color.                     |
 | `borderColor`     | Border color.                         |
 | `loadingColor`    | Loading color.                        |
-| `button`          | Button style.                         |
+| `button`          | Button styles.                        |
 
 Example:
 
