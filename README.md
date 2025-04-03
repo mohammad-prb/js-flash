@@ -13,7 +13,7 @@ It can be used in pure **JavaScript** or **TypeScript** projects, or any other J
 
 ```html
 <!-- Current version -->
-<script src="https://unpkg.com/js-flash@1.4.3"></script>
+<script src="https://unpkg.com/js-flash@1.4.5"></script>
 
 <!-- Always the latest version -->
 <script src="https://unpkg.com/js-flash"></script>
