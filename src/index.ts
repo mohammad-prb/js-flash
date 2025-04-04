@@ -362,7 +362,7 @@ export default class Flash {
         Flash.list.forEach((flashItem) => flashItem.fixPosition());
     }
 
-    /** Pause `closeTimout`. */
+    /** Pause `closeTimeout`. */
     public pauseTimout = (): void => {
         clearTimeout(this.timeout.id);
         this.timeout.remaining -= Date.now() - this.timeout.startTime;
@@ -370,7 +370,7 @@ export default class Flash {
         this.loading.style.animationPlayState = 'paused';
     }
 
-    /** Play `closeTimout`. */
+    /** Play `closeTimeout`. */
     public playTimout = (): void => {
         this.timeout.startTime = Date.now();
         this.timeout.id = setTimeout(() => this.close(), this.timeout.remaining);

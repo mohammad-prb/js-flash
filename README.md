@@ -13,7 +13,7 @@ It can be used in pure **JavaScript** or **TypeScript** projects, or any other J
 
 ```html
 <!-- Current version -->
-<script src="https://unpkg.com/js-flash@1.4.5"></script>
+<script src="https://unpkg.com/js-flash@1.4.6"></script>
 
 <!-- Always the latest version -->
 <script src="https://unpkg.com/js-flash"></script>
@@ -65,17 +65,15 @@ The following options are available for configuration:
 
 These positions are available:
 - `'top'`
-- `'bottom'`
 - `'top-left'`
 - `'top-right'`
+- `'bottom'`
 - `'bottom-left'`
 - `'bottom-right'`
 
-#### Example with options
+Example with options:
 
 ```javascript
-import Flash from 'js-flash';
-
 new Flash('Hello World!', 'info', {
     animation: false,
     closeTimeout: 0,
@@ -91,6 +89,32 @@ Flash messages look like this. (In `ltr` and `rtl` mode)
 
 > [!NOTE]
 > You can customize the style of the flash messages in the [types configuration](#types-configuration).
+
+## Action Button
+
+You can add an action button to the message by passing the `action` object to the constructor:
+
+```javascript
+new Flash('Post deleted!', 'info', {
+    position: 'bottom',
+    action: {
+        text: 'Undo',
+        handler: () => {
+            console.log('Undo clicked.');
+        }
+    }
+});
+```
+
+The `action` object have the following properties:
+
+| Property  | Type       | Description              |
+|:----------|:-----------|:-------------------------|
+| `text`    | `string`   | The button text.         |
+| `handler` | `function` | The click event handler. |
+
+> [!NOTE]
+> You can customize the style of the action buttons in the [types configuration](#types-configuration).
 
 ## Properties
 
@@ -108,8 +132,6 @@ You can access the following properties of the flash message:
 example:
 
 ```javascript
-import Flash from 'js-flash';
-
 const flash = new Flash('Hello World!', 'info');
 
 flash.element.classList.add('custom-class');
@@ -121,7 +143,7 @@ flash.whenClosed.then(() => {
 ```
 
 > [!IMPORTANT]
-> all properties are read-only.
+> All properties are read-only.
 
 ## Methods
 
@@ -136,8 +158,6 @@ You can use the following methods to interact with the flash message:
 example:
 
 ```javascript
-import Flash from 'js-flash';
-
 const flash = new Flash('Hello World!', 'info', {
     closeTimeout: 0,    // Disable auto close
     closeByClick: false // Disable close by click
@@ -164,48 +184,16 @@ Also these methods are available as static methods:
 example:
 
 ```javascript
-import Flash from 'js-flash';
-
 Flash.closeAll();
 Flash.closeByType('warning');
 Flash.closeByPosition('bottom-right');
 ```
-
-## Action Button
-
-You can add an action button to the message by passing the `action` object to the constructor:
-
-```javascript
-import Flash from 'js-flash';
-
-new Flash('Post deleted!', 'info', {
-    position: 'bottom',
-    action: {
-        text: 'Undo',
-        handler: () => {
-            console.log('Undo clicked.');
-        }
-    }
-});
-```
-
-The `action` object have the following properties:
-
-| Property  | Type       | Description              |
-|:----------|:-----------|:-------------------------|
-| `text`    | `string`   | The button text.         |
-| `handler` | `function` | The click event handler. |
-
-> [!NOTE]
-> You can customize the style of the action buttons in the [types configuration](#types-configuration).
 
 ## Base Configuration
 
 You can configure the base settings of the flash messages by `setBaseConfig` method:
 
 ```javascript
-import Flash from 'js-flash';
-
 Flash.setBaseConfig({
     offset: 25,
     gap: 15
@@ -236,8 +224,6 @@ You can set these properties for different message types in base configuration:
 Example:
 
 ```javascript
-import Flash from 'js-flash';
-
 Flash.setBaseConfig({
     types: {
         info: {
@@ -317,8 +303,6 @@ types = {
 You can configure the default settings for each message. (Constructor options)
 
 ```javascript
-import Flash from 'js-flash';
-
 Flash.setDefaultItemConfig({
     icon: false,
     animation: false,

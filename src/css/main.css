@@ -12,6 +12,7 @@
 .fl-item {
     --animation-speed: 0.3s;
 
+    all: unset;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -25,14 +26,17 @@
     transition: var(--animation-speed);
 }
 .fl-icon {
+    all: unset;
     flex-shrink: 0;
     width: 24px;
     height: 24px;
 }
 .fl-content {
+    all: unset;
     flex-grow: 1;
 }
 .fl-btn {
+    all: unset;
     flex-shrink: 0;
     padding: 2px 10px;
     border-radius: 4px;
@@ -43,6 +47,7 @@
     font-size: 0.875em;
 }
 .fl-loading {
+    all: unset;
     position: absolute;
     top: 0;  /* left and right with js */
     width: 100%;
