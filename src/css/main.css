@@ -17,7 +17,7 @@
     align-items: center;
     gap: 8px;
     position: fixed;
-    z-index: 5000;
+    z-index: 2147483647;  /* Max number */
     padding: 8px 12px;
     overflow: hidden;
     outline: 1px solid;  /* outline-color with js */
